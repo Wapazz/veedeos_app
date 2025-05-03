@@ -11,7 +11,7 @@ class VideoApiService {
     int page = 1,
   }) async {
     final Uri uri = Uri.parse(
-        'https://pixabay.com/api/videos/?key=$pixabayApiKey&q=$query');
+        'https://pixabay.com/api/videos/?key=$pixabayApiKey&q=$query&min_width=1280&per_page=50&page=$page');
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {

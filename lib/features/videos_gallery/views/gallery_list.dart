@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:veedeos_app/core/enums/display_mode.dart';
 import 'package:veedeos_app/design/components/empty_state.dart';
 import 'package:veedeos_app/features/videos_gallery/models/video_item.dart';
+import 'package:veedeos_app/features/videos_gallery/widgets/video_card.dart';
 
 class GalleryList extends StatelessWidget {
   const GalleryList({
@@ -24,14 +25,22 @@ class GalleryList extends StatelessWidget {
         key: ValueKey<int>(displayMode.crossAxisCount),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: displayMode.crossAxisCount,
-          childAspectRatio: 16 / 9,
+          childAspectRatio: 16 / 15,
         ),
         itemCount: videos.length,
         itemBuilder: (context, index) {
           final video = videos[index];
           return GestureDetector(
             onTap: () {},
-            child: Image.network(video.thumbnailUrl),
+            child: Padding(
+              padding: displayMode.padding,
+              child: VideoCard(
+                thumbnailUrl: video.thumbnailUrl,
+                duration: video.duration,
+                author: video.author,
+                authorAvatarUrl: video.authorAvatarUrl,
+              ),
+            ),
           );
         },
       ),
