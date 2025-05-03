@@ -19,12 +19,14 @@ class VideosGalleryPage extends StatelessWidget {
         body: BlocBuilder<VideosGalleryViewModel, VideosGalleryState>(
           builder: (context, state) {
             return switch (state) {
-              VideosGalleryInitial() ||
               VideosGalleryLoading() =>
                 const Center(child: CircularProgressIndicator()),
-              VideosGalleryLoaded() => GalleryList(
+              VideosGalleryLoaded() ||
+              VideosGalleryPartialLoading() =>
+                GalleryList(
                   videos: state.videos,
                   displayMode: state.displayMode,
+                  onLoadMore: viewModel.loadNextPage,
                 ),
               VideosGalleryError() => GalleryError(
                   onRetry: viewModel.fetchVideos,

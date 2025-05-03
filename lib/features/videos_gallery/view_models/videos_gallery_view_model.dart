@@ -7,7 +7,7 @@ part 'videos_gallery_state.dart';
 
 class VideosGalleryViewModel extends Cubit<VideosGalleryState> {
   VideosGalleryViewModel(VideoRepository videoRepository)
-      : super(VideosGalleryInitial()) {
+      : super(VideosGalleryLoading()) {
     _videoRepository = videoRepository;
     fetchVideos();
   }
@@ -15,14 +15,32 @@ class VideosGalleryViewModel extends Cubit<VideosGalleryState> {
   late final VideoRepository _videoRepository;
 
   Future<void> fetchVideos({String query = '', int page = 1}) async {
-    emit(VideosGalleryLoading());
+    if (page == 1) {
+      emit(VideosGalleryLoading());
+    } else {
+      emit(VideosGalleryPartialLoading.fromState(state, currentPage: page));
+    }
+
     try {
       final List<VideoItem> videos =
           await _videoRepository.searchVideos(query: query, page: page);
-      emit(VideosGalleryLoaded(videos));
+      emit(VideosGalleryLoaded(
+        currentPage: page,
+        query: query,
+        videos: state.videos + videos,
+        displayMode: state.displayMode,
+      ));
     } catch (e) {
       emit(VideosGalleryError('Failed to load videos.'));
     }
+  }
+
+  void loadNextPage() {
+    final state = this.state;
+    if (state is! VideosGalleryLoaded) {
+      return;
+    }
+    fetchVideos(page: state.currentPage + 1, query: state.query);
   }
 
   void switchDisplayMode(bool value) {
