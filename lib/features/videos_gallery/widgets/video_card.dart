@@ -24,6 +24,7 @@ class VideoCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              const SizedBox(width: 4),
               CircleAvatar(
                 backgroundImage: NetworkImage(authorAvatarUrl),
               ),

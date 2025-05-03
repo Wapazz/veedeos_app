@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:veedeos_app/core/router.dart';
 import 'package:veedeos_app/data/repositories/videos_repository.dart';
 import 'package:veedeos_app/data/services/videos_api_service.dart';
 import 'package:veedeos_app/design/theme.dart';
-import 'package:veedeos_app/features/videos_gallery/videos_gallery_page.dart';
 
 void main() {
   registerServices();
@@ -18,8 +18,9 @@ class VeedeosApp extends StatelessWidget {
     return MaterialApp(
       title: 'Veedeos',
       theme: AppTheme.darkTheme,
-      home: const VideosGalleryPage(),
       debugShowCheckedModeBanner: false,
+      initialRoute: AppRouter.initialRoute,
+      routes: AppRouter.routes,
     );
   }
 }

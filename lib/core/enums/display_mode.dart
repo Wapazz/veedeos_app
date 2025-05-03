@@ -22,4 +22,11 @@ enum DisplayMode {
       list => const EdgeInsets.symmetric(vertical: 8.0),
     };
   }
+
+  double get aspectRation {
+    return switch (this) {
+      grid => 1,
+      list => 16 / 12,
+    };
+  }
 }
