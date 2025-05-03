@@ -35,7 +35,7 @@ class AppTypography {
   static const TextStyle tag = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
-    color: AppColors.accentSecondary,
+    color: AppColors.surface,
     letterSpacing: 0.5,
   );
 
